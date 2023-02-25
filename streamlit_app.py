@@ -1,6 +1,8 @@
 import streamlit as st
 import tkinter as tk
 from tkinter import filedialog
+import matplotlib
+matplotlib.use('Agg')
 
 st.write('Hello world!')
 

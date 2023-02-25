@@ -29,9 +29,6 @@ if len(st.session_state.csv_folder_path) > 0:
     st.text('')
     st.markdown('**Subfolders found in the folder:**')
 
-    else:
-        st.info('No subfolders with campaign name found in this folder...')
-
 else:
     # Informs if cancel selection
     st.info('No folder has been selected yet...')

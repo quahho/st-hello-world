@@ -8,7 +8,7 @@ credentials:
 
 # Cookie for passwordless reauthentication
 cookie:
-    expiry_days: 0
+    expiry_days: 30
     key: random_signature_key 
     name: random_cookie_name
 

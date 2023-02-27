@@ -2,5 +2,4 @@ streamlit
 pandas
 beautifulsoup4
 lxml
-yaml
 streamlit_authenticator

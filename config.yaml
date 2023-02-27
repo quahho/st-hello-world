@@ -1,0 +1,18 @@
+# Credentials for logging in
+credentials:
+    usernames:
+        2x@Marketing:
+            email: vincent.quah@2x.marketing
+            name: 2X Marketing
+            password: "$2b$12$R5CThG8KD/sObRS/ygivLuY7ceWE2kUTqsHoxH8Z2stXUNhSszrDm"
+
+# Cookie for passwordless reauthentication
+cookie:
+    expiry_days: 0
+    key: random_signature_key 
+    name: random_cookie_name
+
+# Preauthorized list of users who can register
+preauthorized:
+    emails:
+    - vincent.quah@2x.marketing

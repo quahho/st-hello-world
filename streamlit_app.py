@@ -6,7 +6,7 @@ import streamlit_authenticator as stauth
 st.write('Hello world!')
 
 # Loading config file
-with open('../config.yaml') as file:
+with open('config.yaml') as file:
     config = yaml.load(file, Loader=yaml.SafeLoader)
 
 # Creating the authenticator object

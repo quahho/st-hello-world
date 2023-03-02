@@ -81,7 +81,7 @@ def showLoginPage() :
         """
         <style>
         [data-testid="stAppViewContainer"] {
-            padding: 10vh 1vw
+            padding: 10vh 1vw;
         }
         </style>
         """,

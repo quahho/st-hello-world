@@ -78,7 +78,7 @@ def showLoginPage() :
     with content :
     
         # Set logo
-        st.image('alt-logo.png')
+        st.image('images/2x-6sense-banner.png')
 
         # Set the inner content alignment
         inner_left_space, inner_content, inner_right_space = st.columns([1, 3, 1])

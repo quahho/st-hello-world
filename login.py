@@ -2,8 +2,13 @@
 # Import libraries
 import bcrypt
 import streamlit as st
-import home
+from home import showHomePage
 
+# Set tab info
+st.set_page_config(
+    page_title="2X | 6sense",
+    page_icon="🎏"
+)
 
 # ====================================================================================================
 
@@ -71,6 +76,18 @@ def checkCode(text_input) :
 # Function to display login page
 def showLoginPage() :
 
+    # Vertically centre the content of the page 
+    st.write(
+        """
+        <style>
+        [data-testid="stAppViewContainer"] {
+            padding: 10vh 1vw
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
     # Set the content alignment
     left_space, content, right_space = st.columns([1, 3, 1])
 
@@ -78,7 +95,7 @@ def showLoginPage() :
     with content :
     
         # Set logo
-        st.image('images/2x-6sense-banner.png')
+        st.image('alt-logo.png')
 
         # Set the inner content alignment
         inner_left_space, inner_content, inner_right_space = st.columns([1, 3, 1])
@@ -125,20 +142,8 @@ if not st.session_state['login_status'] :
 else :
 
     # Display home page when logged in
-    home.showHomePage()
+    showHomePage()
 
-
-# Vertically centre the content of the page 
-st.write(
-    """
-    <style>
-    [data-testid="stAppViewContainer"] {
-        align-items: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # Hide the hamburger icon and "Made with Streamlit" footer
 st.write(
@@ -154,5 +159,4 @@ st.write(
     """,
     unsafe_allow_html=True
 )
-
 

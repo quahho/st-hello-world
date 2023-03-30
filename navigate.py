@@ -162,6 +162,9 @@ def showNavigationBar() :
         [data-testid="stSidebar"] {
             padding: 0 1vw;
         }
+        a {
+            text-decoration: none;
+        }
         </style>
         """,
         unsafe_allow_html=True

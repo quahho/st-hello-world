@@ -1,6 +1,5 @@
 
 # Import libraries
-import copy
 import streamlit as st
 import pandas as pd
 from bs4 import BeautifulSoup

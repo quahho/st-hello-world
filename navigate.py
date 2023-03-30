@@ -93,7 +93,7 @@ def showNavigationBar() :
         st.session_state['option_5'] = 0
 
     # Set clout tag
-    st.sidebar.caption('© 2023 [Quahho](https://bit.ly/3BvREYT) | Handmade in Klang.')
+    st.sidebar.caption('By [Vincent Quah](https://bit.ly/3BvREYT) | Handmade in Klang.')
 
     # Set sidebar title
     st.sidebar.title('Navigation :world_map:')

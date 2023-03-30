@@ -1,5 +1,6 @@
 
 # Import libraries
+import copy
 import streamlit as st
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -315,7 +316,6 @@ def getProfilePageContent(content_table_html) :
         # content table -> tbody -> tr (skipped) -> td -> all table
         profile_page_html_blocks = [x for x in content_table_html[1].find("td").contents if x.name == 'table']
 
-
     # When there is error
     except :
 
@@ -325,33 +325,28 @@ def getProfilePageContent(content_table_html) :
 
     # Loop through each block to get each account data
     for block in profile_page_html_blocks:
-
+        
         # Anticipate error
         try :
-
-            # Define placeholder
-            handled_block = ''
-
-            # Handle case where tbody can be missing
-            if block.find_next().name == 'tbody':
-
-                # Go to tbody before getting all tr
-                handled_block = block.find_next().contents
-
-            elif block.find_next().name == 'tr':
+            
+            # Check if the tr's exist in the next nested level
+            if 'tr' not in [x.name for x in block.contents] :
                 
-                # Get all tr straightaway
-                handled_block = block.contents
-
-            # Remove empty child tr in block
-            # Route: block -> tbody -> all tr (clean newline rows)
-            clean_block = [x for x in handled_block if x != '\n']
+                # While tr is not found
+                while block.find_next().name != 'tr' :
+                    
+                    # Descend to the next lvl
+                    block = block.find_next()
+            
+            # Route: block -> tbody (if present) -> all tr (clean newline rows and any non tr elements)
+            clean_block = [x for x in block.contents if (x != '\n') and (x.name == 'tr')]
+            
 
         # When there is error
         except :
 
-            # Skip current account
-            continue
+            # Stop the code here
+            return False
 
 
         # ================================
@@ -368,8 +363,8 @@ def getProfilePageContent(content_table_html) :
         # When there is error
         except :
 
-            # Skip current account
-            continue
+            # Stop the code here
+            return False
             
 
         # ================================
@@ -661,23 +656,14 @@ def getProfilePageContent(content_table_html) :
                 # Route: 2nd tr and beyond -> table -> tbody -> all tr except 1st tr
                 target_line = stat.find("table").find("tr").text.strip()
 
-                # print(target_line)
-                # st.write(target_line)
-
                 # Replace unique separators to a common separator
                 replaced_text = target_line \
                                 .replace('\n', '') \
                                 .replace('- ', '/') \
                                 .replace(', ', '/')
-
-                # st.write(replaced_text)
-                # print(replaced_text)
-                                
+      
                 # Split string into its components
                 component_list = [x.strip() for x in replaced_text.split('/')]
-
-                # st.write(component_list)
-                # print(component_list)
 
                 # Anticipate error
                 try:

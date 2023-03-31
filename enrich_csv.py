@@ -130,6 +130,18 @@ def checkCSVFiles(uploaded_files) :
                 # End iteration
                 continue
             
+            # When there are nulls appearing in the dataframe
+            if df.isnull().values.any() :
+
+                # Drop rows with null values
+                df = df.dropna()
+
+                # Set first row of data as columns
+                df.columns = df.iloc[0]
+                
+                # Remove first row of data
+                df = df[1:]
+            
             # Add dataframe to list
             dataframe_list.append(df)
 

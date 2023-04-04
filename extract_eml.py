@@ -717,7 +717,11 @@ def getProfilePageContent(content_table_html) :
 
                     # Get all URLs                    
                     # Route: 2nd tr and beyond -> table -> tbody (skipped) -> all tr
-                    raw_url_list = [x.find("a")["href"] for x in stat.find("table").find_all("tr") if x != '\n' and 'href' in str(x)]
+                    raw_url_list = [
+                        x.find("a")["href"] + ' (' + x.text.split(',')[1].split('visitor')[0].strip() + ')' \
+                        for x in stat.find("table").find_all("tr") \
+                        if x != '\n' and 'href' in str(x)
+                    ]
 
                     # Clean raw url list
                     clean_url_list = cleanURL(raw_url_list)
@@ -844,6 +848,12 @@ def cleanURL(raw_url_list) :
     # Loop through each raw url
     for url in raw_url_list :
 
+        # Obtain the visitor count
+        visitor_count = url.split(' ')[1]
+
+        # Obtain url without the visitor count
+        url = url.split(' ')[0]
+
         # Replace special characters in url
         replaced_url = url \
                         .replace('%3D', '=') \
@@ -851,10 +861,10 @@ def cleanURL(raw_url_list) :
                         .replace('%2F', '/') \
                         .replace('%25', '%') \
                         .replace('%20', ' ') \
-                        .replace('%26', '&') \
+                        .replace('%26', '&') 
         
         # Split raw url to obtain the real url
-        split_url = replaced_url.split('redirect=')[-1].split('&event=')[0]
+        split_url = replaced_url.split('redirect=')[-1].split('&event=')[0] + ' ' + visitor_count
 
         # Append to clean url list
         clean_url_list.append(split_url)

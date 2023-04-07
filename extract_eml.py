@@ -67,9 +67,12 @@ def refreshStorageVariables() :
     # Stats info variables
     st.session_state['active_contact_list'] = []
     st.session_state['web_visit_count_list'] = []
-    st.session_state['known_contact_count_list'] = []
-    st.session_state['anonymous_count_list'] = []
+    st.session_state['web_visit_known_contact_count_list'] = []
+    st.session_state['web_visit_anonymous_count_list'] = []
     st.session_state['web_url_list'] = []
+    st.session_state['keyword_count_list'] = []
+    st.session_state['keyword_times_researched_count_list'] = []
+    st.session_state['keyword_anonymous_users_count_list'] = []
     st.session_state['keyword_list'] = []
     st.session_state['bombora_topic_list'] = []
     
@@ -104,9 +107,12 @@ def getTopAccounts(soup, extract_date, file_name) :
                 'Account Reach': st.session_state['account_reach_list'],
                 'Active Contact': st.session_state['active_contact_list'],
                 'Web Visit Count': st.session_state['web_visit_count_list'],
-                'Known Contact Count': st.session_state['known_contact_count_list'],
-                'Anonymous Count': st.session_state['anonymous_count_list'],
+                'Web Visit Known Contact Count': st.session_state['web_visit_known_contact_count_list'],
+                'Web Visit Anonymous Count': st.session_state['web_visit_anonymous_count_list'],
                 'Web URLs': st.session_state['web_url_list'],
+                'Keyword Count': st.session_state['keyword_count_list'],
+                'Keyword Times Researched Count': st.session_state['keyword_times_researched_count_list'],
+                'Keyword Anonymous Users Count': st.session_state['keyword_anonymous_users_count_list'],
                 'Keywords': st.session_state['keyword_list'],
                 'Bombora Company Surge Topics': st.session_state['bombora_topic_list']
             }
@@ -487,9 +493,12 @@ def getProfilePageContent(content_table_html) :
             st.session_state['account_reach_list'].append('')
             st.session_state['active_contact_list'].append('')
             st.session_state['web_visit_count_list'].append('')
-            st.session_state['known_contact_count_list'].append('')
-            st.session_state['anonymous_count_list'].append('')
+            st.session_state['web_visit_known_contact_count_list'].append('')
+            st.session_state['web_visit_anonymous_count_list'].append('')
             st.session_state['web_url_list'].append('')
+            st.session_state['keyword_count_list'].append('')
+            st.session_state['keyword_times_researched_count_list'].append('')
+            st.session_state['keyword_anonymous_users_count_list'].append('')
             st.session_state['keyword_list'].append('')
             st.session_state['bombora_topic_list'].append('')
 
@@ -683,33 +692,33 @@ def getProfilePageContent(content_table_html) :
                 # Anticipate error
                 try:
 
-                    # Get known contact count
+                    # Get web visit known contact count
                     known_contact = cleanNumber(component_list[1].split(' ')[0].strip())
 
-                    # Append to known contact count list
-                    st.session_state['known_contact_count_list'].append(known_contact)
+                    # Append to web visit known contact count list
+                    st.session_state['web_visit_known_contact_count_list'].append(known_contact)
 
                 # When there is error
                 except :
                     
                     # Set empty string
-                    st.session_state['known_contact_count_list'].append('')
+                    st.session_state['web_visit_known_contact_count_list'].append('')
 
 
                 # Anticipate error
                 try:
 
-                    # Get anonymous count
+                    # Get web visit anonymous count
                     anonymous = cleanNumber(component_list[2].split(' ')[0].strip())
 
-                    # Append to anonymous count list
-                    st.session_state['anonymous_count_list'].append(anonymous)
+                    # Append to web visit anonymous count list
+                    st.session_state['web_visit_anonymous_count_list'].append(anonymous)
 
                 # When there is error
                 except :
                     
                     # Set empty string
-                    st.session_state['anonymous_count_list'].append('')
+                    st.session_state['web_visit_anonymous_count_list'].append('')
 
 
                 # Anticipate error
@@ -744,6 +753,66 @@ def getProfilePageContent(content_table_html) :
 
             # Check for keyword row
             if (not has_keyword) and (keyword_present) :
+
+                # Get target line
+                # Route: 2nd tr and beyond -> table -> tbody (skipped) -> first tr 
+                target_line = [x for x in stat.find("table").find_all("tr") if x != '\n'][0].text.strip()
+
+                # Replace unique separators to a common separator
+                replaced_text = target_line \
+                                .replace('- ', '/') \
+                                .replace('by ', '/')
+
+                # Split string into its components
+                component_list = [x.strip() for x in replaced_text.split('/')]
+
+                # Anticipate error
+                try:
+
+                    # Get keyword count
+                    keyword = cleanNumber(component_list[0].split(' ')[0].strip())
+
+                    # Append to keyword count list
+                    st.session_state['keyword_count_list'].append(keyword)
+
+                # When there is error
+                except :
+                    
+                    # Set empty string
+                    st.session_state['keyword_count_list'].append('')
+                
+
+                # Anticipate error
+                try:
+
+                    # Get keyword times researched count
+                    times_researched = cleanNumber(component_list[1].split(' ')[0].strip())
+
+                    # Append to keyword times researched list
+                    st.session_state['keyword_times_researched_count_list'].append(times_researched)
+
+                # When there is error
+                except :
+                    
+                    # Set empty string
+                    st.session_state['keyword_times_researched_count_list'].append('')
+                
+
+                # Anticipate error
+                try:
+
+                    # Get keyword anonymous users count
+                    keyword = cleanNumber(component_list[2].split(' ')[0].strip())
+
+                    # Append to keyword anonymous users list
+                    st.session_state['keyword_anonymous_users_count_list'].append(keyword)
+
+                # When there is error
+                except :
+                    
+                    # Set empty string
+                    st.session_state['keyword_anonymous_users_count_list'].append('')
+
 
                 # Get target line
                 # Route: 2nd tr and beyond -> table -> tbody (skipped) -> last tr -> all span
@@ -818,14 +887,17 @@ def getProfilePageContent(content_table_html) :
 
             # Set empty strings
             st.session_state['web_visit_count_list'].append('')
-            st.session_state['known_contact_count_list'].append('')
-            st.session_state['anonymous_count_list'].append('')
+            st.session_state['web_visit_known_contact_count_list'].append('')
+            st.session_state['web_visit_anonymous_count_list'].append('')
             st.session_state['web_url_list'].append('')
 
         # Case when no keyword row
         if has_keyword == False :
 
             # Set empty string
+            st.session_state['keyword_count_list'].append('')
+            st.session_state['keyword_times_researched_count_list'].append('')
+            st.session_state['keyword_anonymous_users_count_list'].append('')
             st.session_state['keyword_list'].append('')
 
         # Case when no bombora row

@@ -131,7 +131,7 @@ def checkCSVFiles(uploaded_files) :
                 continue
             
             # When there are nulls appearing in the dataframe
-            if df.isnull().values.any() :
+            if (df.isnull().values.any()) and ('Unnamed' in ' '.join(df.columns)) :
 
                 # Drop rows with null values
                 df = df.dropna()

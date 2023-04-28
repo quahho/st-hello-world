@@ -81,7 +81,7 @@ def extractData(uploaded_files, extract_date) :
             old_df = st.session_state['html_output_table']
 
             # Append new dataframe to the old dataframe
-            st.session_state['html_output_table'] = old_df.append(output_df, ignore_index = True)
+            st.session_state['html_output_table'] = pd.concat([old_df, output_df], ignore_index = True)
 
 
 # Function to get summary data and device type data
@@ -163,7 +163,7 @@ def getSummaryAndDevice(soup, extract_date) :
             old_df = st.session_state['html_summary_data']
 
             # Append new dataframe to the old dataframe
-            st.session_state['html_summary_data'] = old_df.append(summary_df, ignore_index = True)
+            st.session_state['html_summary_data'] = pd.concat([old_df, summary_df], ignore_index = True)
         
 
         # ==================================================================================================
@@ -191,7 +191,7 @@ def getSummaryAndDevice(soup, extract_date) :
             old_df = st.session_state['html_device_type']
 
             # Append new dataframe to the old dataframe
-            st.session_state['html_device_type'] = old_df.append(device_df, ignore_index = True)
+            st.session_state['html_device_type'] = pd.concat([old_df, device_df], ignore_index = True)
 
 
         # Return true at the end

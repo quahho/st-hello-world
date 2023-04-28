@@ -361,12 +361,20 @@ def checkCategory(df, campaign_id, extract_date) :
         'Impression',
         'Clicks',
         'Spend',
-        'CPM',
-        'CPC'
+        'CPM'
     ]
 
     # Check fields for match
     if matchColumns(df.columns, COMPARISON_CHART_FIELDS) :
+        
+        # Rename CPC column
+        if 'eCPC' in list(df.columns):
+
+            # Occasion when CPC is eCPC instead
+            df = df.rename(columns = {'eCPC': 'CPC'}, inplace = False)
+
+        # Add the CPC field to the column list
+        COMPARISON_CHART_FIELDS.append('CPC')
 
         # Remove extra fields
         df = removeColumns(df, COMPARISON_CHART_FIELDS)

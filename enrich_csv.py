@@ -298,7 +298,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_target_accounts']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_target_accounts'] = old_df.append(df, ignore_index = True)
+            st.session_state['pltf_target_accounts'] = pd.concat([old_df, df], ignore_index = True)
 
         # Return category
         return 'Target Accounts'
@@ -347,7 +347,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_reached_accounts']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_reached_accounts'] = old_df.append(df, ignore_index = True)
+            st.session_state['pltf_reached_accounts'] = pd.concat([old_df, df], ignore_index = True)
 
         # Return category
         return 'Reached Accounts'
@@ -402,7 +402,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_comparison_chart']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_comparison_chart'] = old_df.append(df, ignore_index = True)
+            st.session_state['pltf_comparison_chart'] = pd.concat([old_df, df], ignore_index = True)
 
         # Return category
         return 'Comparison Chart'
@@ -452,7 +452,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_job_level_function']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_job_level_function'] = pd.concat([old_df, df], ignore_index=True)
+            st.session_state['pltf_job_level_function'] = pd.concat([old_df, df], ignore_index = True)
 
         # Return category
         return 'Job Level Function'
@@ -527,7 +527,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_ads_overview']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_ads_overview'] = old_df.append(df, ignore_index = True)
+            st.session_state['pltf_ads_overview'] = pd.concat([old_df, df], ignore_index = True)
 
         # Return category
         return 'Ads Overview'
@@ -576,7 +576,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_buying_stage_accounts']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_buying_stage_accounts'] = old_df.append(df, ignore_index = True)
+            st.session_state['pltf_buying_stage_accounts'] = pd.concat([old_df, df], ignore_index = True)
 
         # Return category
         return 'Buying Stage Accounts'
@@ -624,7 +624,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_buying_stage']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_buying_stage'] = old_df.append(df, ignore_index = True)
+            st.session_state['pltf_buying_stage'] = pd.concat([old_df, df], ignore_index = True)
 
         # Return category
         return 'Buying Stage'

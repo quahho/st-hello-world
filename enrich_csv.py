@@ -430,7 +430,7 @@ def checkCategory(df, campaign_id, extract_date) :
         df = df.rename(columns = {'Job Level and Job Function': 'Job'}, inplace = False)
 
         # Create separate column for Job Level and Job Function
-        df[['Job Level', 'Job Function']] = df['Job'].str.split(' Level ', 1, expand=True)
+        df[['Job Level', 'Job Function']] = df['Job'].str.split(' Level ', expand=True)
 
         # Clean numerical fields 
         for column in df[['Accounts Reached', 'Impressions', 'Clicks']]:

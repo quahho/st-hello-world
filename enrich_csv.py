@@ -452,7 +452,7 @@ def checkCategory(df, campaign_id, extract_date) :
             old_df = st.session_state['pltf_job_level_function']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_job_level_function'] = old_df.append(df, ignore_index = True)
+            st.session_state['pltf_job_level_function'] = pd.concat([old_df, df], ignore_index=True)
 
         # Return category
         return 'Job Level Function'

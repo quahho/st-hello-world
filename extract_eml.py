@@ -151,7 +151,7 @@ def getTopAccounts(soup, extract_date, file_name) :
                     old_df = st.session_state['eml_top_accounts']
 
                     # Append new dataframe to the old dataframe
-                    st.session_state['eml_top_accounts'] = old_df.append(result_df, ignore_index = True)
+                    st.session_state['eml_top_accounts'] = pd.concat([old_df, result_df], ignore_index = True)
                 
                 # When there is no data for output table
                 if len(st.session_state['eml_output_table']) == 0 :
@@ -166,7 +166,7 @@ def getTopAccounts(soup, extract_date, file_name) :
                     old_df = st.session_state['eml_output_table']
 
                     # Append new dataframe to the old dataframe
-                    st.session_state['eml_output_table'] = old_df.append(output_df, ignore_index = True)
+                    st.session_state['eml_output_table'] = pd.concat([old_df, output_df], ignore_index = True)
 
 
         # When email is incomplete
@@ -195,7 +195,7 @@ def getTopAccounts(soup, extract_date, file_name) :
                 old_df = st.session_state['eml_output_table']
 
                 # Append new dataframe to the old dataframe
-                st.session_state['eml_output_table'] = old_df.append(output_df, ignore_index = True)
+                st.session_state['eml_output_table'] = pd.concat([old_df, output_df], ignore_index = True)
 
 
     # When main content is not found
@@ -224,7 +224,7 @@ def getTopAccounts(soup, extract_date, file_name) :
             old_df = st.session_state['eml_output_table']
 
             # Append new dataframe to the old dataframe
-            st.session_state['eml_output_table'] = old_df.append(output_df, ignore_index = True)
+            st.session_state['eml_output_table'] = pd.concat([old_df, output_df], ignore_index = True)
 
 
 # Function to get main content html block

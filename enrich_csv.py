@@ -472,7 +472,6 @@ def checkCategory(df, campaign_id, extract_date) :
         'CTR',
         'ACTR',
         'CPM',
-        'CPC',
         'VTR',
         'AVTR',
         'Budget',
@@ -481,6 +480,15 @@ def checkCategory(df, campaign_id, extract_date) :
 
     # Check fields for match
     if matchColumns(df.columns, ADS_OVERVIEW_FIELDS) :
+        
+        # Rename CPC column
+        if 'eCPC' in list(df.columns):
+
+            # Occasion when CPC is eCPC instead
+            df = df.rename(columns = {'eCPC': 'CPC'}, inplace = False)
+
+        # Add the CPC field to the column list
+        ADS_OVERVIEW_FIELDS.append('CPC')
 
         # Remove extra fields
         df = removeColumns(df, ADS_OVERVIEW_FIELDS)

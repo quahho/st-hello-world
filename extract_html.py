@@ -418,7 +418,7 @@ def getCampaignAnalytics(soup) :
             elif 'Influenced Form Fills' in text :
 
                 # Obtain influenced form fills
-                inf_form_fills = cleanNumber(text.replace('Influenced Form Fills', ''))
+                inf_form_fills = cleanNumber(text.replace('Influenced Form Fills', '').replace('View All', ''))
 
         # Create list
         campaign_analytics_list = [ctr, vtr, impressions, clicks, ecpm, views, inf_form_fills]

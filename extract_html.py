@@ -95,7 +95,7 @@ def getSummaryAndDevice(soup, extract_date) :
 
         # Get highlights fields
         highlights = getHighlights(soup)
-        total_spent = highlights[0]
+        total_spent = highlights[0] + '/' + highlights[1]
         budget = highlights[1]
         accounts_reached = highlights[2]
         

@@ -347,7 +347,7 @@ def showEnverusBuyingStagePage() :
         st.session_state['env_bs_disable_step_6'] = not st.session_state['env_bs_disable_step_5']
 
         # Fifth step -- Export All Reports
-        st.subheader(':five: Export Compiled Reports')
+        st.subheader(':six: Export Compiled Reports')
         
         # Create space
         st.write('')

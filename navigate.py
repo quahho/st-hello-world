@@ -16,6 +16,7 @@ def selectOption0() :
     st.session_state['option_3'] = 0
     st.session_state['option_4'] = 0
     st.session_state['option_5'] = 0
+    st.session_state['option_6'] = 0
 
 
 # Function to handle Platform CSV option
@@ -28,6 +29,7 @@ def selectOption1() :
     st.session_state['option_3'] = 0
     st.session_state['option_4'] = 0
     st.session_state['option_5'] = 0
+    st.session_state['option_6'] = 0
 
 
 # Function to handle Platform HTML option
@@ -40,6 +42,7 @@ def selectOption2() :
     st.session_state['option_3'] = 0
     st.session_state['option_4'] = 0
     st.session_state['option_5'] = 0
+    st.session_state['option_6'] = 0
 
 
 # Function to handle Platform Guide option
@@ -52,6 +55,7 @@ def selectOption3() :
     st.session_state['option_3'] = 1
     st.session_state['option_4'] = 0
     st.session_state['option_5'] = 0
+    st.session_state['option_6'] = 0
 
 
 # Function to handle Email EML option  
@@ -64,6 +68,7 @@ def selectOption4() :
     st.session_state['option_3'] = 0
     st.session_state['option_4'] = 1
     st.session_state['option_5'] = 0
+    st.session_state['option_6'] = 0
 
 
 # Function to handle Email Guide option  
@@ -76,6 +81,20 @@ def selectOption5() :
     st.session_state['option_3'] = 0
     st.session_state['option_4'] = 0
     st.session_state['option_5'] = 1
+    st.session_state['option_6'] = 0
+
+
+# Function to handle Enverus Buying Stage option  
+def selectOption6() :
+
+    # Set the checkbox values
+    st.session_state['option_0'] = 0
+    st.session_state['option_1'] = 0
+    st.session_state['option_2'] = 0
+    st.session_state['option_3'] = 0
+    st.session_state['option_4'] = 0
+    st.session_state['option_5'] = 0
+    st.session_state['option_6'] = 1
 
 
 # Function to display navigation bar
@@ -91,6 +110,7 @@ def showNavigationBar() :
         st.session_state['option_3'] = 0
         st.session_state['option_4'] = 0
         st.session_state['option_5'] = 0
+        st.session_state['option_6'] = 0
 
     # Set clout tag
     st.sidebar.caption('By [Vincent Quah](https://bit.ly/3BvREYT) | Handmade in Klang.')
@@ -155,12 +175,26 @@ def showNavigationBar() :
         on_change = selectOption5
     )
 
+    # Create separation line
+    st.sidebar.write('---')
+
+    # Set sidebar header
+    st.sidebar.header('Miscellaneous :round_pushpin:')
+
+    # Create email related checkboxes
+    env_bs = st.sidebar.checkbox(
+        label = 'Enverus Buying Stage', 
+        value = st.session_state['option_6'], 
+        key = 'Option 6',
+        on_change = selectOption6
+    )
+
     # Add padding in sidebar
     st.write(
         """
         <style>
         [data-testid="stSidebar"] {
-            padding: 0 1vw;
+            padding: 0 1vw 2vw 1vw;
         }
         a {
             text-decoration: none;

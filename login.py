@@ -9,6 +9,7 @@ from platform_html import showPlatformHTMLPage
 from platform_guide import showPlatformGuidePage
 from email_eml import showEmailEMLPage
 from email_guide import showEmailGuidePage
+from enverus_bs_display import showEnverusBuyingStagePage
 
 
 # ====================================================================================================
@@ -185,6 +186,11 @@ else :
 
         # Display email guide page
         showEmailGuidePage()
+
+    elif st.session_state['option_6'] :
+
+        # Display Enverus Buying Stage page
+        showEnverusBuyingStagePage()
     
     
 # Hide the hamburger icon and "Made with Streamlit" footer

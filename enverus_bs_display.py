@@ -86,6 +86,10 @@ def showEnverusBuyingStagePage() :
     # To store compiled dataframe of buying stage
     if 'env_bs_buying_stage' not in st.session_state :
         st.session_state['env_bs_buying_stage'] = []
+    
+    # To store compiled dataframe of buying stage accounts
+    if 'env_bs_buying_stage' not in st.session_state :
+        st.session_state['env_bs_buying_stage_accounts'] = []
 
 
     # =====================================================================================================================
@@ -138,6 +142,7 @@ def showEnverusBuyingStagePage() :
         # Clear session variables involved in compiled export
         st.session_state['env_bs_valid_category'] = []
         st.session_state['env_bs_buying_stage'] = []
+        st.session_state['env_bs_buying_stage_accounts'] = []
 
         # Hide the download buttons
         st.session_state['env_bs_show_export'] = False
@@ -406,6 +411,7 @@ def showEnverusBuyingStagePage() :
                 # Clear session variables involved in compiled export
                 st.session_state['env_bs_valid_category'] = []
                 st.session_state['env_bs_buying_stage'] = []
+                st.session_state['env_bs_buying_stage_accounts'] = []
 
                 # Hide the download buttons
                 st.session_state['env_bs_show_export'] = False

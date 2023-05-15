@@ -263,6 +263,55 @@ def checkCategory(df, campaign_id, extract_date, product) :
 
         # Return value
         return 'Already Enriched'
+    
+    # ================================================================================================
+
+    # Buying stage accounts fields
+    BUYING_STAGE_ACCOUNTS_FIELDS = [
+        '6sense Company Name',
+        '6sense Domain',
+        '6sense Country',
+        'Buying Stage: Start',
+        'Buying Stage: End',
+        'Max Engagement State: Start',
+        'Max Engagement State: End',
+        'New Pipeline (USD)',
+        'Total Won (USD)'
+    ]
+
+    # Check fields for match
+    if matchColumns(df.columns, BUYING_STAGE_ACCOUNTS_FIELDS) :
+
+        # Remove extra fields
+        df = removeColumns(df, BUYING_STAGE_ACCOUNTS_FIELDS)
+
+        # Add necessary fields
+        df = addColumns(df, campaign_id, extract_date)
+
+        # Clean numerical fields
+        for column in df[['New Pipeline (USD)', 'Total Won (USD)']]:
+            
+            # Replace dollar sign and commas
+            df[column].replace("[$,]", "", inplace = True, regex = True)
+        
+
+        # When there is no data for this category
+        if len(st.session_state['pltf_buying_stage_accounts']) == 0 :
+
+            # Assign the first dataframe
+            st.session_state['pltf_buying_stage_accounts'] = df
+
+        # When there is data for this category
+        else :
+
+            # Get existing dataframe
+            old_df = st.session_state['pltf_buying_stage_accounts']
+
+            # Append new dataframe to the old dataframe
+            st.session_state['pltf_buying_stage_accounts'] = pd.concat([old_df, df], ignore_index=True)
+
+        # Return category
+        return 'Buying Stage Accounts'
 
     # ================================================================================================
 

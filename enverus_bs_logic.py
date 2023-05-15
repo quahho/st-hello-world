@@ -263,7 +263,7 @@ def checkCategory(df, campaign_id, extract_date, product) :
 
         # Return value
         return 'Already Enriched'
-    
+
     # ================================================================================================
 
     # Buying stage accounts fields
@@ -296,19 +296,19 @@ def checkCategory(df, campaign_id, extract_date, product) :
         
 
         # When there is no data for this category
-        if len(st.session_state['pltf_buying_stage_accounts']) == 0 :
+        if len(st.session_state['env_bs_buying_stage_accounts']) == 0 :
 
             # Assign the first dataframe
-            st.session_state['pltf_buying_stage_accounts'] = df
+            st.session_state['env_bs_buying_stage_accounts'] = df
 
         # When there is data for this category
         else :
 
             # Get existing dataframe
-            old_df = st.session_state['pltf_buying_stage_accounts']
+            old_df = st.session_state['env_bs_buying_stage_accounts']
 
             # Append new dataframe to the old dataframe
-            st.session_state['pltf_buying_stage_accounts'] = pd.concat([old_df, df], ignore_index=True)
+            st.session_state['env_bs_buying_stage_accounts'] = pd.concat([old_df, df], ignore_index=True)
 
         # Return category
         return 'Buying Stage Accounts'
@@ -463,6 +463,17 @@ def getCampaignAggregate(df) :
 
 # Function to compile reports by category
 def compileReports(extract_date) :
+
+    # When there is data for buying stage accounts
+    if len(st.session_state['env_bs_buying_stage_accounts']) > 0 :
+
+        # Display download button
+        st.download_button(
+            label = 'Download Buying Stage Accounts Data',
+            data = st.session_state['env_bs_buying_stage_accounts'].to_csv(encoding = 'utf-8-sig', index = False),
+            file_name = '[' + str(extract_date) + ']' + ' Compiled Buying Stage Accounts.csv',
+            mime = 'text/csv'
+        )
 
     # When there is data for buying stage
     if len(st.session_state['env_bs_buying_stage']) > 0 :

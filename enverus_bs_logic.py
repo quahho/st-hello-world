@@ -286,7 +286,7 @@ def checkCategory(df, campaign_id, extract_date, product) :
         df = removeColumns(df, BUYING_STAGE_ACCOUNTS_FIELDS)
 
         # Add necessary fields
-        df = addColumns(df, campaign_id, extract_date)
+        df = addColumns(df, campaign_id, extract_date, product)
 
         # Clean numerical fields
         for column in df[['New Pipeline (USD)', 'Total Won (USD)']]:

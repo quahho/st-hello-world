@@ -358,7 +358,7 @@ def showEnverusBuyingStagePage() :
         st.write('')
 
         # Set fine print warning
-        st.code('# Repeat steps 2 + 3 + 4 until all campaigns are covered before proceeding.')
+        st.code('# Repeat steps 2 + 3 + 4 + 5 until all campaigns are covered before proceeding.')
 
         # Create compile reports button
         compile_button = st.button(

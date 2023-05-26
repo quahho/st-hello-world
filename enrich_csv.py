@@ -429,8 +429,20 @@ def checkCategory(df, campaign_id, extract_date) :
         # Rename columns
         df = df.rename(columns = {'Job Level and Job Function': 'Job'}, inplace = False)
 
-        # Create separate column for Job Level and Job Function
-        df[['Job Level', 'Job Function']] = df['Job'].str.split(' Level ', expand=True)
+        # Check for presence of keyword
+        if df['Job'].str.contains('Level').any() :
+
+            # Create separate column for Job Level and Job Function
+            df[['Job Level', 'Job Function']] = df['Job'].str.split(' Level ', expand = True)
+
+        # When keyword not present
+        else :
+
+            # The entire job is the job function
+            df['Job Function'] = df['Job']
+
+            # Set job level to empty string
+            df['Job Level'] = ''
 
         # Clean numerical fields 
         for column in df[['Accounts Reached', 'Impressions', 'Clicks']]:

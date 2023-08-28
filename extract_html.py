@@ -101,9 +101,11 @@ def getSummaryAndDevice(soup, extract_date) :
         
         # Get account analytics fields
         account_analytics = getAccountAnalytics(soup)
-        avg_inc_act_eng = account_analytics[0]
-        act_newly_eng = account_analytics[1]
-        act_with_inc_eng = account_analytics[2]
+        actr = account_analytics[0]
+        avtr = account_analytics[1]
+        avg_inc_act_eng = account_analytics[2]
+        act_newly_eng = account_analytics[3]
+        act_with_inc_eng = account_analytics[4]
         
         # Get campaign analytics fields
         campaign_analytics = getCampaignAnalytics(soup)
@@ -112,14 +114,9 @@ def getSummaryAndDevice(soup, extract_date) :
         impressions = campaign_analytics[2]
         clicks = campaign_analytics[3]
         ecpm = campaign_analytics[4]
-        views = campaign_analytics[5]
-        inf_form_fills = campaign_analytics[6]
-
-        # Get campaign trend fields
-        campaign_trend = getCampaignTrend(soup)
-        ecpc = campaign_trend[0]
-        actr = campaign_trend[1]
-        avtr = campaign_trend[2]
+        ecpc = campaign_analytics[5]
+        views = campaign_analytics[6]
+        inf_form_fills = campaign_analytics[7]
 
         # Create dictionary
         row_dict = {
@@ -212,7 +209,7 @@ def getCampaignID(soup) :
     try :
         
         # Get all html block in this section
-        html_list = soup.find_all("div", class_="campaignInfoKeyPoints--V-BeF")
+        html_list = soup.find_all("div", class_="mx5")
 
         # Get all text from the html blocks
         text_list = [x.text for x in html_list]
@@ -262,7 +259,7 @@ def getHighlights(soup) :
     try :
 
         # Get all html block in this section
-        html_list = soup.find("div", class_="highlights--QIliH")
+        html_list = soup.find("div", class_="sixsense-core-j7yxdq")
 
         # Get all text from the html blocks
         text_list = [x.text for x in html_list]
@@ -276,22 +273,23 @@ def getHighlights(soup) :
         for text in text_list :
             
             # When total spent exists
-            if 'Total Spent' in text :
+            if 'Total Spend' in text :
 
                 # Obtain total spent
-                total_spent = cleanNumber(text.replace('Total Spent', '').split('/')[0])
+                total_spent = cleanNumber(text.replace('Total Spend', '').split('of ')[0])
 
                 # Obtain budget
-                budget = cleanNumber(text.replace('Total Spent', '').split('/')[1])
+                budget = cleanNumber(text.replace('Total Spend', '').split('of ')[1])
 
             # When accounts reached exists
-            elif 'Accounts Reached' in text :
+            elif 'Accounts reached' in text :
 
                 # Obtain accounts reached
-                accounts_reached = cleanNumber(text.replace('Accounts Reached', '').replace('View All', ''))
+                accounts_reached = cleanNumber(text.replace('Accounts reached', '').replace('View All', ''))
 
         # Create list
         highlight_list = [total_spent, budget, accounts_reached]
+        
 
     # When there is an error
     except :
@@ -310,21 +308,35 @@ def getAccountAnalytics(soup) :
     try :
 
         # Get all html block in account analytics section
-        html_list = soup.find("div", class_="accountAnalytics--2KzuA")
+        html_list = soup.find("div", class_="sixsense-core-1q94rgb")
 
         # Get all text from the html blocks
         text_list = [x.text for x in html_list]
 
         # Initialize variable
+        actr = ''
+        avtr = ''
         avg_inc_act_eng = ''
         act_newly_eng = ''
         act_with_inc_eng = ''
 
         # Search for account analytics related info
         for text in text_list :
+
+            # When ACTR exists
+            if 'Account CTR' in text :
+
+                # Obtain ACTR
+                actr = cleanNumber(text.replace('Account CTR', ''))
+
+            # When AVTR exists
+            elif 'Account VTR' in text :
+
+                # Obtain AVTR
+                avtr = cleanNumber(text.replace('Account VTR', ''))
             
             # When average increase in account engagement exists
-            if 'Avg. Increase in Account Engagement' in text :
+            elif 'Avg. Increase in Account Engagement' in text :
 
                 # Obtain average increase in account engagement
                 avg_inc_act_eng = cleanNumber(text.replace('Avg. Increase in Account Engagement', ''))
@@ -342,13 +354,14 @@ def getAccountAnalytics(soup) :
                 act_with_inc_eng = cleanNumber(text.replace('Accounts With Increased Engagement', ''))
 
         # Create list
-        account_analytics_list = [avg_inc_act_eng, act_newly_eng, act_with_inc_eng]
+        account_analytics_list = [actr, avtr, avg_inc_act_eng, act_newly_eng, act_with_inc_eng]
+        
 
     # When there is an error
     except :
 
         # Set empty list
-        account_analytics_list = ['', '', '']
+        account_analytics_list = ['', '', '', '', '']
 
     # Return list
     return account_analytics_list
@@ -361,7 +374,7 @@ def getCampaignAnalytics(soup) :
     try :
 
         # Get all html block in campaign analytics section
-        html_list = soup.find("div", class_="campaignAnalytics--1XqIl")
+        html_list = soup.find("div", class_="sixsense-core-1518scb")
 
         # Get all text from the html blocks
         text_list = [x.text for x in html_list]
@@ -372,6 +385,7 @@ def getCampaignAnalytics(soup) :
         impressions = ''
         clicks = ''
         ecpm = ''
+        ecpc = ''
         views = ''
         inf_form_fills = ''
 
@@ -408,6 +422,12 @@ def getCampaignAnalytics(soup) :
                 # Obtain eCPM
                 ecpm = cleanNumber(text.replace('eCPM', ''))
             
+            # When eCPC exists
+            elif 'eCPC' in text :
+
+                # Obtain eCPC
+                ecpc = cleanNumber(text.replace('eCPC', ''))
+            
             # When view throughs exists
             elif 'View-throughs' in text :
 
@@ -418,93 +438,20 @@ def getCampaignAnalytics(soup) :
             elif 'Influenced Form Fills' in text :
 
                 # Obtain influenced form fills
-                inf_form_fills = cleanNumber(text.replace('Influenced Form Fills', '').replace('View All', ''))
+                inf_form_fills = cleanNumber(text.replace('Influenced Form Fills', '').replace(' View all', ''))
 
         # Create list
-        campaign_analytics_list = [ctr, vtr, impressions, clicks, ecpm, views, inf_form_fills]
+        campaign_analytics_list = [ctr, vtr, impressions, clicks, ecpm, ecpc, views, inf_form_fills]
+
 
     # When there is an error
     except :
 
         # Set empty list
-        campaign_analytics_list = ['', '', '', '', '', '', '']
+        campaign_analytics_list = ['', '', '', '', '', '', '', '']
 
     # Return list
     return campaign_analytics_list
-
-
-# Function to get campaign trend related info
-def getCampaignTrend(soup) :
-
-    # Anticipate error
-    try :
-
-        # Get all html block in campaign trend section - for eCPC
-        html_list = soup.find_all("div", class_="flexEnd--_-3M9")
-
-        # Get all text from the html blocks
-        text_list = [x.text for x in html_list]
-
-        # Initialize variable
-        ecpc = ''
-
-        # Search for campaign trend related info
-        for text in text_list :
-            
-            # When eCPC exists
-            if 'eCPC' in text :
-
-                # Obtain eCPC
-                ecpc = cleanNumber(text.replace('eCPC:', ''))
-
-    # When there is an error
-    except :
-
-        # Set empty string
-        ecpc = ''
-
-
-    # Anticipate error
-    try :
-
-        # Get all html block in campaign trend section - for ACTR & AVTR
-        html_list = soup.find_all("div", class_="allSidePadding--1DLo7")
-
-        # Get all text from the html blocks
-        text_list = [x.text for x in html_list]
-
-        # Initialize variable
-        actr = ''
-        avtr = ''
-    
-        # Search for campaign trend related info
-        for text in text_list :
-            
-            # When ACTR exists
-            if 'ACTR' in text :
-
-                # Obtain ACTR
-                actr = cleanNumber(text.replace('ACTR', ''))
-
-            # When AVTR exists
-            elif 'AVTR' in text :
-
-                # Obtain AVTR
-                avtr = cleanNumber(text.replace('AVTR', ''))
-
-    # When there is an error
-    except :
-
-        # Set empty string
-        actr = ''
-        avtr = ''
-
-
-    # Create list
-    campaign_trend_list = [ecpc, actr, avtr]
-
-    # Return list
-    return campaign_trend_list
 
 
 # Function to get device types related info

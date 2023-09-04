@@ -374,7 +374,7 @@ def getCampaignAnalytics(soup) :
     try :
 
         # Get all html block in campaign analytics section
-        html_list = soup.find("div", class_="sixsense-core-1518scb")
+        html_list = soup.find("div", class_="sixsense-core-1geq3ys")
 
         # Get all text from the html blocks
         text_list = [x.text for x in html_list]

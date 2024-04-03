@@ -233,8 +233,20 @@ def getMainContent(soup) :
     # Anticipate error
     try :
 
-        # Route: root -> table -> table -> thead + tbody (clean newline rows)
-        content_table_html = [x for x in soup.find("table").find("table").contents if x != '\n']
+        # Find index of the first table that contains the thead and tbody elements
+        for index, table in enumerate(soup.find_all("table")):
+            
+            # List out table's child element tags while ignoring empty tags
+            table_contents = [x.name for x in table.contents if x.name is not None]
+
+            # Get the index of the table list that contains the thead and tbody values 
+            # Get out of loop once found
+            if table_contents == ['thead', 'tbody']:
+                row_index = index
+                break
+
+        # Route: root -> table at specific index -> thead + tbody (clean newline rows)
+        content_table_html = [x for x in soup.find_all("table")[row_index].contents if x != '\n']
 
     # When there is error
     except :
